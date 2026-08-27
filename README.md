@@ -11,7 +11,7 @@ GTranslate is a collection of free translation APIs (Google Translate, Bing Tran
   - Microsoft Azure Translator
   - Yandex.Translate
 
-- Support for translation, transliteration, language detection and text-to-speech in the included translators.
+- Support for translation, rich dictionary lookup, transliteration, language detection and text-to-speech in the included translators.
 
 - Support for all the languages of each translator.
 
@@ -46,6 +46,38 @@ Console.WriteLine(result);
 // Output:
 // Translation: 'Hola Mundo', TargetLanguage: 'Spanish (es)', SourceLanguage: 'English (en)', Service: GoogleTranslator
 ```
+
+### Rich dictionary lookup
+
+Dictionary lookup is an explicit operation and is never performed by `TranslateAsync`. A translator supports it if it implements `IDictionaryTranslator`, which Google Web, Bing and Microsoft do; Google RPC doesn't because its current response has no reliable rich dictionary schema.
+
+```c#
+using GTranslate;
+using GTranslate.Translators;
+
+var translator = new MicrosoftTranslator();
+
+var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en");
+
+foreach (var group in result.Groups)
+{
+    Console.WriteLine(group.PartOfSpeech);
+    foreach (var entry in group.Entries)
+    {
+        Console.WriteLine($"- {entry.Text} ({entry.Confidence:P0})");
+    }
+}
+```
+
+The sections a lookup returns depend on the service:
+
+| Translator | Part of speech | Confidence | Back translations | Definitions | Synonyms | Examples | Pronunciation |
+|-|-|-|-|-|-|-|-|
+| `GoogleTranslator` | Yes | Yes | Yes | Yes | Yes | Yes | Yes |
+| `BingTranslator` | Yes | Yes | Yes | No | No | No | Transliteration only |
+| `MicrosoftTranslator` | Yes | Yes | Yes | No | No | Yes | No |
+
+Dictionary language pairs are provider-specific and are usually narrower than translation language support. In particular, Microsoft and Bing dictionary data supports `zh-Hans` but not `zh-Hant` at the time of writing. HTTP, authentication and protocol failures throw; a successful lookup with no entries returns a result whose `Groups` collection is empty.
 
 ### Transliteration
 Transliteration is similar to translation but the way it works is specific to each translator. Some translators only support transliteration implicitly and others have dedicated transliteration endpoints (like Yandex).
