@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -14,9 +13,9 @@ public sealed class DictionaryGroup : IDictionaryGroup
         IReadOnlyList<string>? definitions = null, IReadOnlyList<string>? synonyms = null)
     {
         PartOfSpeech = partOfSpeech;
-        Entries = entries ?? Array.Empty<IDictionaryEntry>();
-        Definitions = definitions ?? Array.Empty<string>();
-        Synonyms = synonyms ?? Array.Empty<string>();
+        Entries = entries ?? [];
+        Definitions = definitions ?? [];
+        Synonyms = synonyms ?? [];
     }
 
     /// <inheritdoc/>

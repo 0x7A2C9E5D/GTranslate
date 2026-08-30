@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -17,8 +16,8 @@ public sealed class DictionaryEntry : IDictionaryEntry
         Text = text;
         Confidence = confidence;
         Frequency = frequency;
-        BackTranslations = backTranslations ?? Array.Empty<string>();
-        Examples = examples ?? Array.Empty<IDictionaryExample>();
+        BackTranslations = backTranslations ?? [];
+        Examples = examples ?? [];
         NormalizedText = normalizedText;
         Prefix = prefix;
         Transliteration = transliteration;

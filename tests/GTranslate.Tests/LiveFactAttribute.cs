@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace GTranslate.Tests;
 
 internal sealed class LiveFactAttribute : FactAttribute

@@ -15,7 +15,7 @@ public sealed class GoogleDictionaryTests
 
         Assert.Equal(nameof(GoogleTranslator), result.Service);
         Assert.Equal("charge", result.Headword);
-        Assert.Contains(result.Groups, x => x.PartOfSpeech == "noun" && x.Entries.Count > 1);
+        Assert.Contains(result.Groups, x => x is { PartOfSpeech: "noun", Entries.Count: > 1 });
         Assert.Contains(result.Groups, x => x.PartOfSpeech == "verb");
         Assert.Contains(result.Groups.SelectMany(x => x.Entries), x => x.BackTranslations.Contains("charge"));
         Assert.NotEmpty(result.Examples);

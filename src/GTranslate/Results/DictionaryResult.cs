@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using JetBrains.Annotations;
@@ -21,8 +20,8 @@ public sealed class DictionaryResult : IDictionaryResult
         SourceLanguage = sourceLanguage;
         Headword = headword;
         Pronunciation = pronunciation;
-        Groups = groups ?? Array.Empty<IDictionaryGroup>();
-        Examples = examples ?? Array.Empty<IDictionaryExample>();
+        Groups = groups ?? [];
+        Examples = examples ?? [];
     }
 
     /// <inheritdoc/>

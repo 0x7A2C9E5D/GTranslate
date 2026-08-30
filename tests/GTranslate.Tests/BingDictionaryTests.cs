@@ -8,7 +8,7 @@ public sealed class BingDictionaryTests
     public async Task LookupMapsFixtureAndReusesCredentialLifecycle()
     {
         int credentialRequests = 0;
-        using var client = new HttpClient(new FixtureHttpMessageHandler(async (request, _) =>
+        using var client = new HttpClient(new FixtureHttpMessageHandler(async (request, ct) =>
         {
             if (request.RequestUri!.AbsolutePath == "/translator")
             {
@@ -19,7 +19,7 @@ public sealed class BingDictionaryTests
                 };
             }
 
-            string body = request.Content is null ? string.Empty : await request.Content.ReadAsStringAsync();
+            string body = request.Content is null ? string.Empty : await request.Content.ReadAsStringAsync(ct);
 
             Assert.Equal("/tlookupv3", request.RequestUri.AbsolutePath);
             Assert.Contains("from=en", body);
@@ -32,7 +32,7 @@ public sealed class BingDictionaryTests
 
         Assert.Equal(1, credentialRequests);
         Assert.Equal(nameof(BingTranslator), result.Service);
-        Assert.Contains(result.Groups, x => x.PartOfSpeech == "NOUN" && x.Entries.Count > 1);
+        Assert.Contains(result.Groups, x => x is { PartOfSpeech: "NOUN", Entries.Count: > 1 });
         var bank = result.Groups.SelectMany(x => x.Entries).First();
         Assert.NotNull(bank.Confidence);
         Assert.NotEmpty(bank.BackTranslations);

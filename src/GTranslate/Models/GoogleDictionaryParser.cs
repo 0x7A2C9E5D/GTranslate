@@ -10,31 +10,31 @@ internal static class GoogleDictionaryParser
     public static DictionaryResult Parse(GoogleTranslationResultModel model, string source, Language targetLanguage, Language sourceLanguage, string service)
     {
         var groups = new List<IDictionaryGroup>();
-        var dictionaryGroups = model.Dictionary ?? Array.Empty<GoogleDictionaryGroupModel>();
+        var dictionaryGroups = model.Dictionary ?? [];
 
         foreach (var modelGroup in dictionaryGroups)
         {
             var entries = modelGroup.Entries?
                 .Where(static x => !string.IsNullOrWhiteSpace(x.Word))
-                .Select(static x => (IDictionaryEntry)new DictionaryEntry(x.Word!, x.Score, x.Frequency, x.ReverseTranslations))
-                .ToArray() ?? Array.Empty<IDictionaryEntry>();
+                .Select(static IDictionaryEntry (x) => new DictionaryEntry(x.Word!, x.Score, x.Frequency, x.ReverseTranslations))
+                .ToArray() ?? [];
 
             var definitions = model.Definitions?
                 .Where(x => PartOfSpeechEquals(x.PartOfSpeech, modelGroup.PartOfSpeech))
-                .SelectMany(static x => x.Entries ?? Array.Empty<GoogleDefinitionModel>())
+                .SelectMany(static x => x.Entries ?? [])
                 .Select(static x => x.Gloss)
                 .Where(static x => !string.IsNullOrWhiteSpace(x))
                 .Select(static x => x!)
                 .Distinct(StringComparer.Ordinal)
-                .ToArray() ?? Array.Empty<string>();
+                .ToArray() ?? [];
 
             var synonyms = model.Synsets?
                 .Where(x => PartOfSpeechEquals(x.PartOfSpeech, modelGroup.PartOfSpeech))
-                .SelectMany(static x => x.Entries ?? Array.Empty<GoogleSynsetModel>())
-                .SelectMany(static x => x.Synonyms ?? Array.Empty<string>())
+                .SelectMany(static x => x.Entries ?? [])
+                .SelectMany(static x => x.Synonyms ?? [])
                 .Where(static x => !string.IsNullOrWhiteSpace(x))
                 .Distinct(StringComparer.Ordinal)
-                .ToArray() ?? Array.Empty<string>();
+                .ToArray() ?? [];
 
             groups.Add(new DictionaryGroup(modelGroup.PartOfSpeech, entries, definitions, synonyms));
         }
@@ -43,11 +43,11 @@ internal static class GoogleDictionaryParser
         {
             var knownEntries = new HashSet<string>(groups.SelectMany(static x => x.Entries).Select(static x => x.Text), StringComparer.Ordinal);
             var alternatives = model.AlternativeTranslations?
-                .SelectMany(static x => x.Alternatives ?? Array.Empty<GoogleAlternativeTranslationModel>())
+                .SelectMany(static x => x.Alternatives ?? [])
                 .Where(static x => !string.IsNullOrWhiteSpace(x.Word))
                 .Where(x => knownEntries.Add(x.Word!))
-                .Select(static x => (IDictionaryEntry)new DictionaryEntry(x.Word!, x.Score))
-                .ToArray() ?? Array.Empty<IDictionaryEntry>();
+                .Select(static IDictionaryEntry (x) => new DictionaryEntry(x.Word!, x.Score))
+                .ToArray() ?? [];
 
             if (alternatives.Length > 0)
             {
@@ -57,8 +57,8 @@ internal static class GoogleDictionaryParser
 
         var examples = model.Examples?.Examples?
             .Where(static x => !string.IsNullOrWhiteSpace(x.Text))
-            .Select(static x => (IDictionaryExample)new DictionaryExample(x.Text!))
-            .ToArray() ?? Array.Empty<IDictionaryExample>();
+            .Select(static IDictionaryExample (x) => new DictionaryExample(x.Text!))
+            .ToArray() ?? [];
 
         string? pronunciation = model.Sentences?
             .Select(static x => x.SourceTransliteration)

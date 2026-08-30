@@ -311,7 +311,7 @@ public sealed class MicrosoftTranslator : IDictionaryTranslator, IDisposable
             ?? throw new TranslatorException("Received an invalid response from the dictionary lookup API.", Name);
 
         var exampleRequests = lookupModels
-            .SelectMany(x => (x.Translations ?? Array.Empty<MicrosoftDictionaryTranslationModel>())
+            .SelectMany(x => (x.Translations ?? [])
                 .Select(translation => new
                 {
                     Text = x.NormalizedSource ?? text,

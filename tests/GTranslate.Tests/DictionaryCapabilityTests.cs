@@ -11,9 +11,9 @@ public sealed class DictionaryCapabilityTests
         using var bing = new BingTranslator();
         using var microsoft = new MicrosoftTranslator();
 
-        Assert.IsAssignableFrom<IDictionaryTranslator>(google);
-        Assert.IsAssignableFrom<IDictionaryTranslator>(bing);
-        Assert.IsAssignableFrom<IDictionaryTranslator>(microsoft);
+        Assert.IsType<IDictionaryTranslator>(google, exactMatch: false);
+        Assert.IsType<IDictionaryTranslator>(bing, exactMatch: false);
+        Assert.IsType<IDictionaryTranslator>(microsoft, exactMatch: false);
     }
 
     [Fact]
@@ -21,6 +21,6 @@ public sealed class DictionaryCapabilityTests
     {
         using var translator = new GoogleTranslator2();
 
-        Assert.IsNotAssignableFrom<IDictionaryTranslator>(translator);
+        Assert.IsNotType<IDictionaryTranslator>(translator, exactMatch: false);
     }
 }
