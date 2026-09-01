@@ -11,7 +11,7 @@ public sealed class GoogleDictionaryTests
         using var client = CreateClient(Fixture.Read("Google", "polysemous-word"));
         using var translator = new GoogleTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("charge", "zh-TW", "en");
+        var result = await translator.LookupDictionaryAsync("charge", "zh-TW", "en", TestContext.Current.CancellationToken);
 
         Assert.Equal(nameof(GoogleTranslator), result.Service);
         Assert.Equal("charge", result.Headword);
@@ -27,10 +27,10 @@ public sealed class GoogleDictionaryTests
         using var client = CreateClient(Fixture.Read("Google", "single-word"));
         using var translator = new GoogleTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("hello", "zh-TW", "en");
+        var result = await translator.LookupDictionaryAsync("hello", "zh-TW", "en", TestContext.Current.CancellationToken);
 
-        Assert.Single(result.Groups);
-        Assert.Single(result.Groups[0].Entries);
+        var item = Assert.Single(result.Groups);
+        Assert.Single(item.Entries);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public sealed class GoogleDictionaryTests
         using var client = CreateClient(Fixture.Read("Google", fixture));
         using var translator = new GoogleTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("a complete sentence", "zh-TW", "en");
+        var result = await translator.LookupDictionaryAsync("a complete sentence", "zh-TW", "en", TestContext.Current.CancellationToken);
 
         Assert.Empty(result.Groups);
     }
@@ -76,7 +76,7 @@ public sealed class GoogleDictionaryTests
             Task.FromResult(FixtureHttpMessageHandler.Json("{}", HttpStatusCode.TooManyRequests))));
         using var translator = new GoogleTranslator(client);
 
-        await Assert.ThrowsAsync<HttpRequestException>(() => translator.LookupDictionaryAsync("charge", "zh-TW", "en"));
+        await Assert.ThrowsAsync<HttpRequestException>(() => translator.LookupDictionaryAsync("charge", "zh-TW", "en", TestContext.Current.CancellationToken));
     }
 
     [Fact]

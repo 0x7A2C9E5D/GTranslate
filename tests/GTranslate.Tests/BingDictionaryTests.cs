@@ -28,7 +28,7 @@ public sealed class BingDictionaryTests
         }));
         using var translator = new BingTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en", TestContext.Current.CancellationToken);
 
         Assert.Equal(1, credentialRequests);
         Assert.Equal(nameof(BingTranslator), result.Service);
@@ -45,7 +45,7 @@ public sealed class BingDictionaryTests
         using var client = CreateSequentialClient(Fixture.Read("Bing", "empty-result"));
         using var translator = new BingTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("sentence", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("sentence", "zh-CN", "en", TestContext.Current.CancellationToken);
 
         Assert.Empty(result.Groups);
     }
@@ -58,10 +58,10 @@ public sealed class BingDictionaryTests
         using var client = CreateSequentialClient(Fixture.Read("Bing", fixture));
         using var translator = new BingTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en", TestContext.Current.CancellationToken);
 
-        Assert.Single(result.Groups);
-        Assert.Single(result.Groups[0].Entries);
+        var item = Assert.Single(result.Groups);
+        Assert.Single(item.Entries);
     }
 
     private static HttpClient CreateSequentialClient(string lookupFixture)

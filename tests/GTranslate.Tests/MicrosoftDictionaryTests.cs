@@ -17,7 +17,7 @@ public sealed class MicrosoftDictionaryTests
         }));
         using var translator = new MicrosoftTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en", TestContext.Current.CancellationToken);
 
         Assert.Equal(nameof(MicrosoftTranslator), result.Service);
         var entry = Assert.Single(result.Groups).Entries[0];
@@ -37,7 +37,7 @@ public sealed class MicrosoftDictionaryTests
         }));
         using var translator = new MicrosoftTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("sentence", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("sentence", "zh-CN", "en", TestContext.Current.CancellationToken);
 
         Assert.Equal(1, requests);
         Assert.Empty(result.Groups);
@@ -57,7 +57,7 @@ public sealed class MicrosoftDictionaryTests
         }));
         using var translator = new MicrosoftTranslator(client);
 
-        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en");
+        var result = await translator.LookupDictionaryAsync("bank", "zh-CN", "en", TestContext.Current.CancellationToken);
 
         Assert.Single(result.Groups);
         Assert.Single(result.Groups[0].Entries);
