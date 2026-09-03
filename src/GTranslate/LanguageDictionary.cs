@@ -20,8 +20,8 @@ using ReadOnlyLanguageDictionary = System.Collections.ObjectModel.ReadOnlyDictio
 [PublicAPI]
 public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
 {
-    private const int TotalLanguages = 269;
-    private const int TotalAliases = 801;
+    private const int TotalLanguages = 278;
+    private const int TotalAliases = 828;
 
     internal LanguageDictionary()
     {
@@ -169,9 +169,11 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
     private readonly ReadOnlyLanguageDictionary _languages = new Dictionary<string, Language>(TotalLanguages, StringComparer.OrdinalIgnoreCase)
     {
         ["aa"] = new("Afar", "Qafaraf", "aa", "aar", TranslationServices.Google),
-        ["ab"] = new("Abkhaz", "Аԥсуа бызшәа", "ab", "abk", TranslationServices.Google),
+        ["ab"] = new("Abkhaz", "Аԥсуа бызшәа", "ab", "abk", TranslationServices.Google | TranslationServices.Yandex),
+        ["abq"] = new("Abaza", "абаза бызшва", "abq", "abq", TranslationServices.Yandex),
         ["ace"] = new("Acehnese", "بهسا اچيه", "ace", "ace", TranslationServices.Google),
         ["ach"] = new("Acholi", "Lwo", "ach", "ach", TranslationServices.Google),
+        ["ady"] = new("Adyghe", "Адыгабзэ", "ady", "ady", TranslationServices.Yandex),
         ["af"] = new("Afrikaans", "Afrikaans", "af", "afr"),
         ["ak"] = new("Akan", "Ákán", "ak", "aka", TranslationServices.Google),
         ["alz"] = new("Alur", "Dho-Alur", "alz", "alz", TranslationServices.Google),
@@ -187,7 +189,7 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["ban"] = new("Balinese", "Basa Bali", "ban", "ban", TranslationServices.Google),
         ["bbc"] = new("Batak Toba", "Hata Batak Toba", "bbc", "bbc", TranslationServices.Google),
         ["bci"] = new("Baoulé", "Baule", "bci", "bci", TranslationServices.Google),
-        ["be"] = new("Belarusian", "беларуская", "be", "bel", TranslationServices.Google | TranslationServices.Yandex),
+        ["be"] = new("Belarusian", "беларуская", "be", "bel", TranslationServices.Google | TranslationServices.Yandex | TranslationServices.Microsoft),
         ["bem"] = new("Bemba", "Chibemba", "bem", "bem", TranslationServices.Google),
         ["ber"] = new("Berber", "ⵜⴰⵎⴰⵣⵉⵖⵜ", "ber", "ber", TranslationServices.Google),
         ["ber-Latn"] = new("Berber (Latin)", "Tamaziɣt (Talatinit)", "ber-Latn", "ber-Latn", TranslationServices.Google),
@@ -203,9 +205,9 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["bs"] = new("Bosnian", "bosanski", "bs", "bos"),
         ["bts"] = new("Batak Simalungun", "Sahap Simalungun", "bts", "bts", TranslationServices.Google),
         ["btx"] = new("Batak Karo", "Cakap Karo", "btx", "btx", TranslationServices.Google),
-        ["bua"] = new("Buryat", "буряад хэлэн", "bua", "bua", TranslationServices.Google),
+        ["bua"] = new("Buryat", "буряад хэлэн", "bua", "bua", TranslationServices.Google | TranslationServices.Yandex),
         ["ca"] = new("Catalan", "Català", "ca", "cat"),
-        ["ce"] = new("Chechen", "Нохчийн мотт", "ce", "che", TranslationServices.Google),
+        ["ce"] = new("Chechen", "Нохчийн мотт", "ce", "che", TranslationServices.Google | TranslationServices.Yandex),
         ["ceb"] = new("Cebuano", "Binisaya", "ceb", "ceb", TranslationServices.Google | TranslationServices.Yandex),
         ["cgg"] = new("Kiga", "Chiga", "cgg", "cgg", TranslationServices.Google),
         ["ch"] = new("Chamorro", "Finuʼ Chamoru", "ch", "cha", TranslationServices.Google),
@@ -284,9 +286,11 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["ka"] = new("Georgian", "ქართული", "ka", "kat"),
         ["kac"] = new("Jingpo", "Jinghpaw ga", "kac", "kac", TranslationServices.Google),
         ["kazlat"] = new("Kazakh (Latin)", "qazaqşa", "kazlat", "kazlat", TranslationServices.Yandex),
+        ["kbd"] = new("Kabardian", "адыгэбзэ", "kbd", "kbd", TranslationServices.Yandex),
         ["kek"] = new("Qʼeqchiʼ", "Kekchi", "kek", "kek", TranslationServices.Google),
         ["kg"] = new("Kikongo", "Kikongo", "kg", "kon", TranslationServices.Google),
         ["kha"] = new("Khasi", "Ka Ktien Khasi", "kha", "kha", TranslationServices.Google),
+        ["kjh"] = new("Khakas", "Хакас тілі", "kjh", "kjh", TranslationServices.Yandex),
         ["kk"] = new("Kazakh", "Қазақ Тілі", "kk", "kaz"),
         ["kl"] = new("Greenlandic", "Kalaallisut", "kl", "kal", TranslationServices.Google),
         ["km"] = new("Khmer", "ខ្មែរ", "km", "khm"),
@@ -294,6 +298,7 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["kn"] = new("Kannada", "ಕನ್ನಡ", "kn", "kan"),
         ["ko"] = new("Korean", "한국어", "ko", "kor"),
         ["kr"] = new("Kanuri", "Kànùrí", "kr", "kau", TranslationServices.Google),
+        ["krc"] = new("Karachay-Balkar", "къарачай-малкъар тил", "krc", "krc", TranslationServices.Yandex),
         ["kri"] = new("Krio", "Krio", "kri", "kri", TranslationServices.Google),
         ["ks"] = new("Kashmiri", "کٲشُر", "ks", "kas", TranslationServices.Bing | TranslationServices.Microsoft),
         ["ktu"] = new("Kituba", "Kikongo ya leta", "ktu", "ktu", TranslationServices.Google),
@@ -301,7 +306,7 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["kv"] = new("Komi", "Коми кыв", "kv", "kom", TranslationServices.Google | TranslationServices.Yandex),
         ["ky"] = new("Kyrgyz", "Kyrgyz", "ky", "kir"),
         ["la"] = new("Latin", "Latina", "la", "lat", TranslationServices.Google | TranslationServices.Yandex),
-        ["lb"] = new("Luxembourgish", "Lëtzebuergesch", "lb", "ltz", TranslationServices.Google | TranslationServices.Yandex),
+        ["lb"] = new("Luxembourgish", "Lëtzebuergesch", "lb", "ltz", TranslationServices.Google | TranslationServices.Yandex | TranslationServices.Microsoft),
         ["lg"] = new("Luganda", "Oluganda", "lg", "lug", TranslationServices.Google | TranslationServices.Bing | TranslationServices.Microsoft),
         ["li"] = new("Limburgish", "Limburgs ", "li", "lim", TranslationServices.Google),
         ["lij"] = new("Ligurian", "Lìgure", "lij", "lij", TranslationServices.Google),
@@ -319,6 +324,7 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["mai"] = new("Maithili", "मैथिली", "mai", "mai", TranslationServices.Google | TranslationServices.Bing | TranslationServices.Microsoft),
         ["mak"] = new("Makassarese", "Bahasa Makassar", "mak", "mak", TranslationServices.Google),
         ["mam"] = new("Mam", "Qyol Mam", "mam", "mam", TranslationServices.Google),
+        ["mdf"] = new("Moksha", "мокшень кяль", "mdf", "mdf", TranslationServices.Yandex),
         ["mfe"] = new("Mauritian Creole", "Kreol Morisien", "mfe", "mfe", TranslationServices.Google),
         ["mg"] = new("Malagasy", "Malagasy", "mg", "mlg"),
         ["mh"] = new("Marshallese", "Kajin Majōl", "mh", "mah", TranslationServices.Google),
@@ -330,6 +336,7 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["mn"] = new("Mongolian", "Монгол хэл", "mn", "mon"),
         ["mn-Mong"] = new("Mongolian (Traditional)", "ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ", "mn-Mong", "mn-Mong", TranslationServices.Bing | TranslationServices.Microsoft),
         ["mni"] = new("Manipuri", "\uABC3\uABE9\uABC7\uABE9\uABC2\uABE3\uABDF", "mni", "mni", TranslationServices.Google | TranslationServices.Bing | TranslationServices.Microsoft),
+        ["mns"] = new("Mansi", "ма̄ньси",  "mns", "mns", TranslationServices.Yandex),
         ["mr"] = new("Marathi", "मराठी", "mr", "mar"),
         ["mrj"] = new("Western Mari", "Мары йӹлмӹ", "mrj", "mrj", TranslationServices.Yandex),
         ["ms"] = new("Malay", "Melayu", "ms", "msa"),
@@ -338,12 +345,14 @@ public sealed class LanguageDictionary : ILanguageDictionary<string, Language>
         ["mwr"] = new("Marwari", "मारवाड़ी", "mwr", "mwr", TranslationServices.Google),
         ["mww"] = new("Hmong Daw", "Hmong Daw", "mww", "mww", TranslationServices.Bing | TranslationServices.Microsoft),
         ["my"] = new("Burmese", "မြန်မာ", "my", "mya"),
+        ["myv"] = new("Erzya", "эрзянь кель", "myv", "myv", TranslationServices.Yandex),
         ["ndc"] = new("Ndau", "Ndau", "ndc", "ndc", TranslationServices.Google),
         ["ne"] = new("Nepali", "नेपाली", "ne", "nep"),
         ["new"] = new("Newar", "नेपाल भाषा", "new", "new", TranslationServices.Google),
         ["nhe"] = new("Nahuatl", "Nawatlahtolli", "nhe", "nhe", TranslationServices.Google),
         ["nl"] = new("Dutch", "Nederlands", "nl", "nld"),
         ["no"] = new("Norwegian", "Norsk", "no", "nor"),
+        ["nog"] = new("Nogai", "Ногай тили", "nog", "nog", TranslationServices.Yandex),
         ["nqo"] = new("NKo", "ߒߞߏ", "nqo", "nqo", TranslationServices.Google),
         ["nr"] = new("Ndebele (South)", "isiNdebele", "nr", "nbl", TranslationServices.Google),
         ["nso"] = new("Sepedi", "Sesotho sa Leboa", "nso", "nso", TranslationServices.Google | TranslationServices.Bing | TranslationServices.Microsoft),
