@@ -12,9 +12,9 @@ namespace LanguageScraper;
 [UsedImplicitly]
 public class YandexLanguageScraper : ILanguageScraper
 {
-    private static ReadOnlySpan<byte> TranslatorLanguagesStart => "TRANSLATOR_LANGS: "u8;
+    private static ReadOnlySpan<byte> TranslatorLanguagesStart => "\"TRANSLATOR_LANGS\":"u8;
 
-    private static ReadOnlySpan<byte> TranslatorLanguagesEnd => ",\n"u8;
+    private static ReadOnlySpan<byte> TranslatorLanguagesEnd => "\"}"u8;
 
     private static readonly Uri YandexTranslateUri = new("https://translate.yandex.com/");
 
@@ -35,7 +35,7 @@ public class YandexLanguageScraper : ILanguageScraper
         var span = bytes.AsSpan();
 
         int start = span.IndexOf(TranslatorLanguagesStart) + TranslatorLanguagesStart.Length;
-        int length = span[start..].IndexOf(TranslatorLanguagesEnd);
+        int length = span[start..].IndexOf(TranslatorLanguagesEnd) + TranslatorLanguagesEnd.Length;
 
         var languages = JsonDocument.Parse(bytes.AsMemory(start, length))
             .RootElement
